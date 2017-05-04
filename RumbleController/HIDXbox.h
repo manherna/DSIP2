@@ -1,0 +1,29 @@
+#pragma once
+#include <Windows.h>
+#include<XInput.h>
+#include "BaseHID.h"
+struct CONTROLER_STATE
+{
+	XINPUT_STATE lastState;
+	XINPUT_STATE state;
+	DWORD dwResult;
+	bool bLockVibration;
+	XINPUT_VIBRATION vibration;
+};
+
+
+class HIDXbox :
+	public BaseHID
+{
+	CONTROLER_STATE ctrl;
+
+public:
+	HIDXbox();
+	~HIDXbox();
+	bool readController();
+	void writeController();
+	void mandoAHID();
+private:
+	bool g_bDeadZoneOn;
+};
+
