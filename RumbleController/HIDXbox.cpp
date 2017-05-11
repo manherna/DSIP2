@@ -53,11 +53,10 @@ void HIDXbox::mandoAHID()
 
 }
 void HIDXbox::writeController(){
-
-
+	ctrl.vibration.wRightMotorSpeed = (WORD)(rMotor *  MAXUINT16);
+	ctrl.vibration.wLeftMotorSpeed = (WORD)(lMotor * MAXUINT16);
+	XInputSetState(0, &ctrl.vibration);
 }
-
-
 
 
 HIDXbox::~HIDXbox()

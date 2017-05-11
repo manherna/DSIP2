@@ -13,6 +13,8 @@
 #pragma warning( default : 4996 )
 #include "resource.h"
 
+#include "HIDXbox.h"
+
 
 //-----------------------------------------------------------------------------
 // Function-prototypes
@@ -55,6 +57,8 @@ HWND g_hWnd;
 //-----------------------------------------------------------------------------
 int APIENTRY wWinMain( HINSTANCE hInst, HINSTANCE, LPWSTR, int )
 {
+
+	HIDXbox keku;
     // Register the window class
     HBRUSH hBrush = CreateSolidBrush( 0xFF0000 );
     WNDCLASSEX wc =

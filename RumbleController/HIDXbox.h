@@ -23,6 +23,7 @@ public:
 	bool readController();
 	void writeController();
 	void mandoAHID();
+	void updateController();
 private:
 	bool g_bDeadZoneOn;
 };
