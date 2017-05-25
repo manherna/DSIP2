@@ -79,7 +79,6 @@ int APIENTRY wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, int)
 	return 0;
 }
 
-
 //Gestion de mensajes
 
 LRESULT WINAPI MsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
@@ -154,9 +153,6 @@ VOID CALLBACK updateControllerState(){
 		}
 
 		//Movimientos de joystis aqui
-		if (controller.LJX != 0){
-			
-		}
 	
 		controller.writeController();
 }

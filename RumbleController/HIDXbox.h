@@ -1,7 +1,8 @@
 #pragma once
 #include <Windows.h>
-#include<XInput.h>
+#include <XInput.h>
 #include "BaseHID.h"
+
 struct CONTROLER_STATE
 {
 	XINPUT_STATE lastState;
@@ -19,6 +20,7 @@ class HIDXbox :
 
 public:
 	HIDXbox();
+	HIDXbox(float t) :BaseHID(t), g_bDeadZoneOn(true){};
 	~HIDXbox();
 	bool readController();
 	void writeController();
@@ -26,5 +28,6 @@ public:
 	void updateController();
 private:
 	bool g_bDeadZoneOn;
+
 };
 

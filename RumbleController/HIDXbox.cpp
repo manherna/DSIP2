@@ -1,12 +1,12 @@
+#pragma once
 #include "HIDXbox.h"
 #define INPUT_DEADZONE  ( 0.24f * FLOAT(0x7FFF) )  // Default to 24% of the 
 
-HIDXbox::HIDXbox()
+HIDXbox::HIDXbox() :BaseHID(10)
 {
-
-
-
+	g_bDeadZoneOn = true;
 }
+
 bool HIDXbox::readController(){
 	XInputGetState(0, &ctrl.state);
 	return (ctrl.dwResult == ERROR_SUCCESS) ? true : false;

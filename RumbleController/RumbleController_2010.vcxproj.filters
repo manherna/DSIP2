@@ -17,7 +17,6 @@
   <ItemGroup>
     <ClCompile Include="BaseHID.cpp" />
     <ClCompile Include="HIDXbox.cpp" />
-    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <CLInclude Include="resource.h">
@@ -28,6 +27,7 @@
     </ResourceCompile>
     <ClInclude Include="BaseHID.h" />
     <ClInclude Include="HIDXbox.h" />
+    <ClInclude Include="AppHID.h" />
   </ItemGroup>
   <ItemGroup>
   </ItemGroup>

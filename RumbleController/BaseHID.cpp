@@ -11,15 +11,17 @@ void BaseHID::Actualiza(){
 		wButtonsUp = ~wButtons & wLastButtons;
 
 		//aquí hariamos el filtrado de joysticks.
+		fThumbLXf = (1 - aTR)*fThumbLXf + aTR*fThumbLX;
+		fThumbLYf = (1 - aTR)*fThumbLYf + aTR*fThumbLY;
+
+
+
+		fThumbRXf = (1 - aTR)*fThumbRXf + aTR*fThumbRX;
+		fThumbRYf = (1 - aTR)*fThumbRYf + aTR*fThumbRY;
+
+		
+		wLastButtons = wButtons;
 	}
 
 }
 
-BaseHID::BaseHID()
-{
-}
-
-
-BaseHID::~BaseHID()
-{
-}
