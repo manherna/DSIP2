@@ -39,10 +39,10 @@ protected:
 	const float aTR = T / (0.1) + T;
 	float lMotor, rMotor;
 
-
 	virtual void mandoAHID() = 0;
 	virtual bool readController() = 0;
 	virtual void writeController() = 0;
+
 
 	float tUpdate;
 

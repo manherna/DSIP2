@@ -157,6 +157,7 @@
       <TargetMachine>MachineX86</TargetMachine>
       <UACExecutionLevel>AsInvoker</UACExecutionLevel>
       <DelayLoadDLLs>%(DelayLoadDLLs)</DelayLoadDLLs>
+      <EntryPointSymbol>wWinMainCRTStartup</EntryPointSymbol>
     </Link>
     <Manifest>
       <EnableDPIAwareness>true</EnableDPIAwareness>
@@ -377,11 +378,9 @@
   <ItemGroup>
     <ClCompile Include="BaseHID.cpp" />
     <ClCompile Include="HIDXbox.cpp" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="AppHID.h" />
     <ClInclude Include="BaseHID.h" />
     <ClInclude Include="HIDXbox.h" />
     <CLInclude Include="resource.h" />
