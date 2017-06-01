@@ -1,3 +1,8 @@
+//Práctica 2 de Diseño de Sistemas Interactivos
+// Gestión de un HID de Xbox one
+// Por Manuel Hernández
+
+
 #include <Windows.h>
 #include "HIDXbox.h"
 #include <commdlg.h>
