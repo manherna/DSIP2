@@ -5,12 +5,14 @@
 
 #include <Windows.h>
 #include "HIDXbox.h"
+#include "HIDWii.h"
 #include <commdlg.h>
 #include <basetsd.h>
 
 
 #define T 10   //ms para actualizar
-#define TARGET_XBOX360
+#define TARGET_WII
+
 #ifdef TARGET_XBOX360
 HIDXbox controller(T);
 #elif defined(TARGET_PS3)
@@ -20,6 +22,7 @@ HIDWii controller(T);
 #endif
 
 void GeneraEventos(HIDXbox * controller);
+void GeneraEventos(HIDWii * controller);
 
 
 WCHAR g_szMessage[4][1024];
@@ -95,9 +98,7 @@ KillTimer(g_hWnd, 1);
 break;
 }
 
-case WM_TIMER:
-updateControllerState();
-break;
+
 }
 
 return DefWindowProc(hWnd, msg, wParam, lParam);
@@ -214,6 +215,26 @@ void GeneraEventos(HIDXbox * Control){
 	}
 	SetCursorPos(ptMouse.x, ptMouse.y);
 	Control->writeController();
+}
+void GeneraEventos(HIDWii * Control){
+	if (Control->BU(0xFFFFF))
+		Control->leftMotor(1);
+
+	POINT ptMouse;
+	GetCursorPos(&ptMouse);
+
+
+	if (Control->LJX() != 0){
+		ptMouse.x += Control->LJX() * 10;
+	}
+
+	if (Control->LJY() != 0){
+		ptMouse.y -= Control->LJY() * 10;
+	}
+
+	SetCursorPos(ptMouse.x, ptMouse.y);
+	Control->writeController();
+
 }
 
 

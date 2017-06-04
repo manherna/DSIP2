@@ -21,6 +21,8 @@
     <ClInclude Include="HIDXbox.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
+    <ClInclude Include="HIDWii.h" />
+    <ClInclude Include="wiiuse_v0.12_win\wiiuse.h" />
   </ItemGroup>
   <ItemGroup>
     <CLInclude Include="resource.h">

@@ -148,7 +148,7 @@
     </ClCompile>
     <Link>
       <AdditionalOptions> %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>xinput.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>xinput.lib;wiiuse_v0.12_win\wiiuse.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <LargeAddressAware>true</LargeAddressAware>
@@ -156,7 +156,7 @@
       <DataExecutionPrevention>true</DataExecutionPrevention>
       <TargetMachine>MachineX86</TargetMachine>
       <UACExecutionLevel>AsInvoker</UACExecutionLevel>
-      <DelayLoadDLLs>%(DelayLoadDLLs)</DelayLoadDLLs>
+      <DelayLoadDLLs>wiiuse.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
       <EntryPointSymbol>wWinMainCRTStartup</EntryPointSymbol>
     </Link>
     <Manifest>
@@ -382,8 +382,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseHID.h" />
+    <ClInclude Include="HIDWii.h" />
     <ClInclude Include="HIDXbox.h" />
     <CLInclude Include="resource.h" />
+    <ClInclude Include="wiiuse_v0.12_win\wiiuse.h" />
     <ResourceCompile Include="RumbleController.rc" />
   </ItemGroup>
   <ItemGroup>
