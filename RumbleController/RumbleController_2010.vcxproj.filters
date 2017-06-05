@@ -23,6 +23,7 @@
     </ClInclude>
     <ClInclude Include="HIDWii.h" />
     <ClInclude Include="wiiuse_v0.12_win\wiiuse.h" />
+    <ClInclude Include="WiiUse\wiiusecpp.h" />
   </ItemGroup>
   <ItemGroup>
     <CLInclude Include="resource.h">
@@ -40,5 +41,6 @@
       <Filter>Resource Files</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="WiiUse\wiiusecpp.cpp" />
   </ItemGroup>
 </Project>

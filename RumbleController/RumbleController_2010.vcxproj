@@ -148,7 +148,7 @@
     </ClCompile>
     <Link>
       <AdditionalOptions> %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>xinput.lib;wiiuse_v0.12_win\wiiuse.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>xinput.lib;WiiUse\wiiuse.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <LargeAddressAware>true</LargeAddressAware>
@@ -379,12 +379,14 @@
     <ClCompile Include="BaseHID.cpp" />
     <ClCompile Include="HIDXbox.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="WiiUse\wiiusecpp.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseHID.h" />
     <ClInclude Include="HIDWii.h" />
     <ClInclude Include="HIDXbox.h" />
     <CLInclude Include="resource.h" />
+    <ClInclude Include="WiiUse\wiiusecpp.h" />
     <ClInclude Include="wiiuse_v0.12_win\wiiuse.h" />
     <ResourceCompile Include="RumbleController.rc" />
   </ItemGroup>

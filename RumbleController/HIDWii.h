@@ -1,51 +1,88 @@
 #pragma once
 #include <Windows.h>
+#include "WiiUse\wiiusecpp.h"
 #include "BaseHID.h"
-#include "wiiuse_v0.12_win\wiiuse.h"
 #define CONTROLLERS 1
 
 class HIDWii :
 	public BaseHID
 {
 public:
-	wiimote ** wiimotes;
-	BYTE ** buffers;
+	CWii * base;
+	CWiimote * controller;
 	bool motorOn;
-	HIDWii() :BaseHID(10){ 
-		wiimotes = wiiuse_init(CONTROLLERS);
-		wiiuse_set_bluetooth_stack(wiimotes, CONTROLLERS, WIIUSE_STACK_MS);
-		wiiuse_find(wiimotes, CONTROLLERS, 10);
-		wiiuse_connect(wiimotes, CONTROLLERS);
-		wiiuse_poll(wiimotes, CONTROLLERS);
-	};
+	HIDWii();
 	HIDWii(float t) : BaseHID(t){
-		wiimotes = wiiuse_init(CONTROLLERS);
-		wiiuse_set_bluetooth_stack(wiimotes, CONTROLLERS, WIIUSE_STACK_MS);
-		wiiuse_find(wiimotes, CONTROLLERS, 10);
-		wiiuse_connect(wiimotes, CONTROLLERS);
-		wiiuse_poll(wiimotes, CONTROLLERS);
+		base = new CWii(1);
+		base->Find(30);
+		
+		controller = &base->Connect()[0];
+		controller->SetMotionSensingMode(CWiimote::ON);
+		controller->Accelerometer.SetGravityCalVector(100, 100, 100);
+		controller->SetLEDs(CWiimote::LED_1);
+		controller->SetLEDs(CWiimote::LED_2);
+		controller->SetLEDs(CWiimote::LED_3);
+		controller->SetLEDs(CWiimote::LED_4);
+		controller->SetLEDs(CWiimote::LED_1 + CWiimote::LED_2 + CWiimote::LED_3 + CWiimote::LED_4);
 	};
-	virtual ~HIDWii(){};
+	virtual ~HIDWii(){
+		delete base;
+	};
 	bool readController(){
-		wiiuse_poll(wiimotes, CONTROLLERS);
-		if (wiimotes[0] != nullptr) return true;
+		if (controller != nullptr){
+			return true;
+		}
 		else return false;
+	
 	}
 	void mandoAHID(){
-		for (size_t i = 0; i < CONTROLLERS; i++){
-			wButtons = wiimotes[i]->btns;
-			wButtonsDown = wiimotes[i]->btns_held;
-			wButtonsUp = wiimotes[i]->btns_released;
+		base->Poll();
+		float roll, pitch, yaw;
+		controller->Accelerometer.GetOrientation(pitch, roll, yaw);
+		fThumbLY = -pitch * 10/ 180;
+		fThumbLX = roll * 10 / 180;
+		WORD buttons = 0x00000;
 
-			fThumbLY = wiimotes[i]->orient.pitch / (MAXINT);
-			fThumbLX = wiimotes[i]->accel.x / (MAXBYTE);
+		if (controller->Buttons.isPressed(WIIMOTE_BUTTON_A)){
+			buttons += WIIMOTE_BUTTON_A;
 		}
+		if (controller->Buttons.isPressed(WIIMOTE_BUTTON_B)){
+			buttons += WIIMOTE_BUTTON_B;
+		}
+		if (controller->Buttons.isPressed(WIIMOTE_BUTTON_PLUS)){
+			buttons += WIIMOTE_BUTTON_PLUS;
+		}
+		if (controller->Buttons.isPressed(WIIMOTE_BUTTON_MINUS)){
+			buttons += WIIMOTE_BUTTON_MINUS;
+		}
+		if (controller->Buttons.isPressed(WIIMOTE_BUTTON_HOME)){
+			buttons += WIIMOTE_BUTTON_HOME;
+		}
+		if (controller->Buttons.isPressed(WIIMOTE_BUTTON_UP)){
+			buttons += WIIMOTE_BUTTON_UP;
+		}
+		if (controller->Buttons.isPressed(WIIMOTE_BUTTON_DOWN)){
+			buttons += WIIMOTE_BUTTON_DOWN;
+		}
+		if (controller->Buttons.isPressed(WIIMOTE_BUTTON_RIGHT)){
+			buttons += WIIMOTE_BUTTON_RIGHT;
+		}
+		if (controller->Buttons.isPressed(WIIMOTE_BUTTON_LEFT)){
+			buttons += WIIMOTE_BUTTON_LEFT;
+		}
+		if (controller->Buttons.isPressed(WIIMOTE_BUTTON_ONE)){
+			buttons += WIIMOTE_BUTTON_ONE;
+		}
+		if (controller->Buttons.isPressed(WIIMOTE_BUTTON_TWO)){
+			buttons += WIIMOTE_BUTTON_TWO;
+		}
+		wButtons = buttons;
 	};
 	void writeController(){
-		if (rMotor > 0 || lMotor > 0){
-			wiiuse_rumble(wiimotes[0], 1);
+		if (lMotor > 0 || rMotor > 0){
+			controller->SetRumbleMode(CWiimote::ON);
 		}
-		else wiiuse_rumble(wiimotes[0], 0);
+		else controller->SetRumbleMode(CWiimote::OFF);
 	}
 };
 

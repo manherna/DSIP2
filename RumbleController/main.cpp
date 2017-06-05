@@ -10,14 +10,17 @@
 #include <basetsd.h>
 
 
-#define T 10   //ms para actualizar
+  //ms para actualizar
 #define TARGET_WII
+#define T
 
 #ifdef TARGET_XBOX360
+#define T 10
 HIDXbox controller(T);
 #elif defined(TARGET_PS3)
 HIDPs controller(T);
 #elif defined(TARGET_WII)
+#define T 5 
 HIDWii controller(T);
 #endif
 
@@ -217,11 +220,67 @@ void GeneraEventos(HIDXbox * Control){
 	Control->writeController();
 }
 void GeneraEventos(HIDWii * Control){
-	if (Control->BU(0xFFFFF))
-		Control->leftMotor(1);
-
+	
 	POINT ptMouse;
 	GetCursorPos(&ptMouse);
+
+	if (Control->BD(WIIMOTE_BUTTON_A)){
+		mouse_event(MOUSEEVENTF_LEFTDOWN, ptMouse.x, ptMouse.y, 0, NULL);
+	}
+	if (Control->BU(WIIMOTE_BUTTON_A)){
+		mouse_event(MOUSEEVENTF_LEFTUP, ptMouse.x, ptMouse.y, 0, NULL);
+	}
+
+	//Start y back
+	if (Control->BD(WIIMOTE_BUTTON_HOME))keybd_event(VK_ESCAPE, 0x18, NULL, NULL);
+	if (Control->BU(WIIMOTE_BUTTON_HOME))keybd_event(VK_ESCAPE, 0x18, KEYEVENTF_KEYUP, NULL);
+
+	if (Control->BD(WIIMOTE_BUTTON_MINUS))keybd_event(VK_RETURN, 0x18, NULL, NULL);
+	if (Control->BU(WIIMOTE_BUTTON_MINUS))keybd_event(VK_RETURN, 0x18, KEYEVENTF_KEYUP, NULL);
+
+
+
+	//Botones X y B para inicio y fin
+	if (Control->BD(WIIMOTE_BUTTON_ONE)){
+		keybd_event(VK_HOME, 0x18, NULL, NULL);
+	}
+	if (Control->BU(WIIMOTE_BUTTON_ONE)){
+		keybd_event(VK_HOME, 0x18, KEYEVENTF_KEYUP, NULL);
+	}
+	if (Control->BD(WIIMOTE_BUTTON_TWO)){
+		keybd_event(VK_END, 0x18, NULL, NULL);
+	}
+	if (Control->BU(WIIMOTE_BUTTON_TWO)){
+		keybd_event(VK_END, 0x18, KEYEVENTF_KEYUP, NULL);
+	}
+
+
+
+	//USO DEL PAD
+	if (Control->BD(WIIMOTE_BUTTON_LEFT)){
+		keybd_event(VK_LEFT, 0x18, NULL, NULL);
+	}
+	if (Control->BU(WIIMOTE_BUTTON_LEFT)){
+		keybd_event(VK_LEFT, 0x18, KEYEVENTF_KEYUP, NULL);
+	}
+	if (Control->BD(WIIMOTE_BUTTON_RIGHT)){
+		keybd_event(VK_RIGHT, 0x18, NULL, NULL);
+	}
+	if (Control->BU(WIIMOTE_BUTTON_RIGHT)){
+		keybd_event(VK_RIGHT, 0x18, KEYEVENTF_KEYUP, NULL);
+	}
+	if (Control->BD(WIIMOTE_BUTTON_UP)){
+		keybd_event(VK_UP, 0x18, NULL, NULL);
+	}
+	if (Control->BU(WIIMOTE_BUTTON_UP)){
+		keybd_event(VK_UP, 0x18, KEYEVENTF_KEYUP, NULL);
+	}
+	if (Control->BD(WIIMOTE_BUTTON_DOWN)){
+		keybd_event(VK_DOWN, 0x18, NULL, NULL);
+	}
+	if (Control->BU(WIIMOTE_BUTTON_DOWN)){
+		keybd_event(VK_DOWN, 0x18, KEYEVENTF_KEYUP, NULL);
+	}
 
 
 	if (Control->LJX() != 0){
@@ -232,6 +291,14 @@ void GeneraEventos(HIDWii * Control){
 		ptMouse.y -= Control->LJY() * 10;
 	}
 
+	if (Control->BD(0xFFFFF)){
+		Control->leftMotor(1);
+		Control->rightMotor(1);
+	}
+	else if (Control->BU(0xFFFFF)) {
+		Control->leftMotor(0.0f);
+		Control->rightMotor(0.0f);
+	}
 	SetCursorPos(ptMouse.x, ptMouse.y);
 	Control->writeController();
 
